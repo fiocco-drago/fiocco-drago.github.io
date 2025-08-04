@@ -17,22 +17,86 @@
     button { padding: 8px 20px; border-radius: 6px; background: #fae09d; border: none; font-weight: bold; cursor: pointer;}
     .ps { font-size: 0.9em; color: #715d37;}
     .desc { margin: 14px 0;}
+
+    .gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  .gallery img {
+    max-width: 30%;
+    cursor: zoom-in;
+    border-radius: 8px;
+    transition: transform .2s;
+  }
+  .gallery img:hover {
+    transform: scale(1.05);
+  }
+
+  /* Lightbox */
+  .hidden { display: none; }
+  .lightbox {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  .lightbox-img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 8px;
+  }
+  .lightbox-close {
+    position: absolute;
+    top: 20px; right: 30px;
+    font-size: 2rem; color: #fff;
+    cursor: pointer;
+    user-select: none;
+  }
+    
   </style>
+  <script>
+  document.querySelectorAll('.gallery img').forEach(img => {
+    img.addEventListener('click', () => {
+      const largeSrc = img.getAttribute('data-large');
+      const lb = document.getElementById('lightbox');
+      lb.querySelector('.lightbox-img').src = largeSrc;
+      lb.classList.remove('hidden');
+    });
+  });
+
+  // Chiudi al click sulla X o fuori immagine, o premendo Esc
+  const lightbox = document.getElementById('lightbox');
+  lightbox.addEventListener('click', e => {
+    if (e.target === lightbox || e.target.classList.contains('lightbox-close')) {
+      lightbox.classList.add('hidden');
+    }
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') lightbox.classList.add('hidden');
+  });
+</script>
 </head>
 <body>
   <div class="main">
     <h1>Il Drago Calmo e il Soffio Magico</h1>
     <h2>Una fiaba illustrata per aiutare i bambini a respirare via le nuvole grigie delle emozioni.</h2>
-    <div class="images">
-      <a href="https://fiocco-drago.github.io/03.png" target="_blank">
-        <img src="https://fiocco-drago.github.io/03.png" alt="Descrizione di Fiocco" class="story-image" style="cursor: zoom-in;">
-      </a>
-      <a href="https://fiocco-drago.github.io/06.png" target="_blank">
-        <img src="https://fiocco-drago.github.io/06.png" alt="Incontro con la bambina" class="story-image" style="cursor: zoom-in;">
-      </a>
-      <a href="https://fiocco-drago.github.io/08.png" target="_blank">
-        <img src="https://fiocco-drago.github.io/08.png" alt="Fiocco e la bimba sereni" class="story-image" style="cursor: zoom-in;">
-      </a>
+    <div class="gallery">
+      <img src="https://fiocco-drago.github.io/03.png" alt="Scena 1" data-large="https://fiocco-drago.github.io/03.png">
+      <img src="https://fiocco-drago.github.io/06.png" alt="Scena 2" data-large="https://fiocco-drago.github.io/06.png">
+      <img src="https://fiocco-drago.github.io/08.png" alt="Scena 3" data-large="https://fiocco-drago.github.io/08.png">
+    </div>
+
+<!-- Lightbox overlay -->
+    <div id="lightbox" class="lightbox hidden">
+      <span class="lightbox-close">&times;</span>
+      <img class="lightbox-img" src="" alt="Aperta a tutto schermo">
     </div>
     <div class="desc">
       <p>Un racconto magico e colorato per insegnare ai più piccoli a calmare rabbia, tristezza e paura attraverso il potere del respiro, con un piccolo drago amico che li guida passo passo.<br>
