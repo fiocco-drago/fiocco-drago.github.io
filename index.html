@@ -36,7 +36,6 @@
   }
 
   /* Lightbox */
-  .hidden { display: none; }
   .lightbox {
     position: fixed;
     top: 0; left: 0;
@@ -46,6 +45,10 @@
     align-items: center;
     justify-content: center;
     z-index: 1000;
+  }
+  /* Nasconde il lightbox */
+  .lightbox.hidden {
+    display: none !important;
   }
   .lightbox-img {
     max-width: 90%;
