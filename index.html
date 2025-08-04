@@ -65,40 +65,26 @@
     
   </style>
   <script>
-  const lightbox = document.getElementById('lightbox');
-  const lbImage = lightbox.querySelector('.lightbox-img');
-  const closeBtn = lightbox.querySelector('.lightbox-close');
+    document.addEventListener('DOMContentLoaded', function() {
+    const lightbox = document.getElementById('lightbox');
+    const lbImage  = lightbox.querySelector('.lightbox-img');
+    const closeBtn = lightbox.querySelector('.lightbox-close');
 
-  // 1) Apertura lightbox
-  document.querySelectorAll('.gallery img').forEach(img => {
-    img.addEventListener('click', () => {
-      lbImage.src = img.dataset.large;
-      lightbox.classList.remove('hidden');
+    document.querySelectorAll('.gallery img').forEach(img => {
+      img.addEventListener('click', () => {
+        lbImage.src = img.dataset.large;
+        lightbox.classList.remove('hidden');
+      });
     });
-  });
 
-  // 2) Chiusura con la X
-  closeBtn.addEventListener('click', () => {
-    lightbox.classList.add('hidden');
-  });
-
-  // 3) Chiusura cliccando sul backdrop (solo se target è il lightbox, non l'immagine)
-  lightbox.addEventListener('click', e => {
-    if (e.target === lightbox) {
-      lightbox.classList.add('hidden');
-    }
-  });
-
-  // 4) Prevent click sull'immagine di chiudere il lightbox
-  lbImage.addEventListener('click', e => {
-    e.stopPropagation();
-  });
-
-  // 5) Chiusura premendo ESC
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && !lightbox.classList.contains('hidden')) {
-      lightbox.classList.add('hidden');
-    }
+    closeBtn.addEventListener('click', () => lightbox.classList.add('hidden'));
+    lightbox.addEventListener('click', e => {
+      if (e.target === lightbox) lightbox.classList.add('hidden');
+    });
+    lbImage.addEventListener('click', e => e.stopPropagation());
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') lightbox.classList.add('hidden');
+    });
   });
 </script>
 </head>
